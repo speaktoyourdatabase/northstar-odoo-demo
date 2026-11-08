@@ -1,0 +1,70 @@
+# Northstar demo company for Odoo 20 Community, by Speak To Your Database (speaktoyourdatabase.com/northstar).
+# Put this file and the northstar-odoo20-*.zip backup in the same folder, then run: docker compose up
+# The first start restores the backup (one or two minutes); later starts keep your data. Odoo opens at http://localhost:8069
+# (another port: NORTHSTAR_PORT=8070 docker compose up). Start over with the original data: docker compose down -v
+# Official images only: odoo and postgres from Docker Hub.
+name: northstar-demo
+
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: odoo
+      POSTGRES_PASSWORD: odoo
+      POSTGRES_DB: postgres
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U odoo -d postgres"]
+      interval: 2s
+      timeout: 5s
+      retries: 60
+
+  # Runs once at each start: restores the backup when the database is not there yet, otherwise does nothing.
+  restore:
+    image: odoo:20.0-20261102
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PGHOST: db
+      PGUSER: odoo
+      PGPASSWORD: odoo
+    volumes:
+      - odoo-data:/var/lib/odoo
+      - ./:/snapshot:ro
+    entrypoint: ["/bin/bash", "-c"]
+    command:
+      - |
+        set -eu
+        if psql -d postgres -tAc "SELECT 1 FROM pg_database WHERE datname = 'northstar'" | grep -q 1; then
+          echo "Northstar database found: nothing to restore."
+          exit 0
+        fi
+        zip=$$(ls -1 /snapshot/northstar-odoo20-*.zip 2>/dev/null | sort | tail -n 1 || true)
+        if [ -z "$$zip" ]; then
+          echo "No northstar-odoo20-*.zip in this folder. Download it from the release page and put it next to docker-compose.yml."
+          exit 1
+        fi
+        echo "Restoring $$(basename "$$zip"), one or two minutes the first time..."
+        odoo db --db_host db --db_user odoo --db_password odoo load --force northstar_restoring "$$zip"
+        odoo db --db_host db --db_user odoo --db_password odoo rename --force northstar_restoring northstar
+        echo "Northstar restored. Odoo starts now."
+
+  odoo:
+    image: odoo:20.0-20261102
+    depends_on:
+      restore:
+        condition: service_completed_successfully
+    ports:
+      - "127.0.0.1:${NORTHSTAR_PORT:-8069}:8069"
+    environment:
+      HOST: db
+      USER: odoo
+      PASSWORD: odoo
+    volumes:
+      - odoo-data:/var/lib/odoo
+
+volumes:
+  db-data:
+  odoo-data:

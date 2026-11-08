@@ -1,0 +1,291 @@
+{
+  "name": "Northstar Office & Industrial Supply Inc. (fictional), Odoo 20 Community demo database",
+  "publisher": "Speak To Your Database",
+  "url": "https://speaktoyourdatabase.com/northstar",
+  "build_date": "2026-11-08",
+  "data_from": "2025-11-07",
+  "data_until": "2026-11-07",
+  "refresh": "monthly",
+  "odoo_version": "20.0-20261102",
+  "odoo_edition": "Community",
+  "docker_images": {
+    "odoo": "odoo:20.0-20261102",
+    "postgres": "postgres:16"
+  },
+  "postgres_version_built_on": "16.15",
+  "apps": [
+    "Sales",
+    "CRM",
+    "Purchase",
+    "Inventory",
+    "Invoicing",
+    "Point of Sale",
+    "Manufacturing",
+    "Employees",
+    "Time Off",
+    "Attendances",
+    "Project",
+    "Contacts",
+    "Calendar",
+    "Discuss",
+    "Skills",
+    "project_todo"
+  ],
+  "modules_outside_community": [],
+  "counts": [
+    {
+      "app": "Sales",
+      "label": "Quotations and sales orders",
+      "count": 2194
+    },
+    {
+      "app": "Sales",
+      "label": "Confirmed sales orders",
+      "count": 1313
+    },
+    {
+      "app": "Sales",
+      "label": "Sales order lines",
+      "count": 6370
+    },
+    {
+      "app": "CRM",
+      "label": "Leads and opportunities (won, lost and open)",
+      "count": 603
+    },
+    {
+      "app": "CRM",
+      "label": "Won opportunities",
+      "count": 273
+    },
+    {
+      "app": "CRM",
+      "label": "Lost (archived with a reason)",
+      "count": 298
+    },
+    {
+      "app": "Purchase",
+      "label": "Purchase orders",
+      "count": 472
+    },
+    {
+      "app": "Inventory",
+      "label": "Products (sold, bought, made)",
+      "count": 147
+    },
+    {
+      "app": "Inventory",
+      "label": "Transfers done (receipts, deliveries)",
+      "count": 2205
+    },
+    {
+      "app": "Inventory",
+      "label": "Stock moves done",
+      "count": 10690
+    },
+    {
+      "app": "Invoicing",
+      "label": "Customer invoices",
+      "count": 1830
+    },
+    {
+      "app": "Invoicing",
+      "label": "Customer credit notes",
+      "count": 70
+    },
+    {
+      "app": "Invoicing",
+      "label": "Vendor bills",
+      "count": 624
+    },
+    {
+      "app": "Invoicing",
+      "label": "Payments",
+      "count": 2316
+    },
+    {
+      "app": "Invoicing",
+      "label": "Journal entries posted (all kinds)",
+      "count": 5355
+    },
+    {
+      "app": "Point of Sale",
+      "label": "Counter sessions",
+      "count": 250
+    },
+    {
+      "app": "Point of Sale",
+      "label": "Counter tickets (refunds included)",
+      "count": 3514
+    },
+    {
+      "app": "Manufacturing",
+      "label": "Manufacturing orders",
+      "count": 175
+    },
+    {
+      "app": "Manufacturing",
+      "label": "Work orders",
+      "count": 441
+    },
+    {
+      "app": "Manufacturing",
+      "label": "Bills of materials",
+      "count": 9
+    },
+    {
+      "app": "Employees",
+      "label": "Employees (active)",
+      "count": 25
+    },
+    {
+      "app": "Employees",
+      "label": "Departments",
+      "count": 8
+    },
+    {
+      "app": "Time Off",
+      "label": "Time off requests",
+      "count": 113
+    },
+    {
+      "app": "Time Off",
+      "label": "Allocations",
+      "count": 88
+    },
+    {
+      "app": "Attendances",
+      "label": "Attendance records",
+      "count": 1399
+    },
+    {
+      "app": "Project",
+      "label": "Projects",
+      "count": 53
+    },
+    {
+      "app": "Project",
+      "label": "Tasks",
+      "count": 479
+    },
+    {
+      "app": "Timesheets",
+      "label": "Timesheet lines",
+      "count": 1412
+    },
+    {
+      "app": "Contacts",
+      "label": "Customer companies",
+      "count": 150
+    },
+    {
+      "app": "Contacts",
+      "label": "Vendor companies",
+      "count": 37
+    }
+  ],
+  "logins": [
+    {
+      "login": "admin",
+      "name": "Administrator",
+      "password": "admin"
+    },
+    {
+      "login": "rachel.donovan@northstar-supply.example",
+      "name": "Rachel Donovan",
+      "password": "northstar"
+    },
+    {
+      "login": "marcus.hale@northstar-supply.example",
+      "name": "Marcus Hale",
+      "password": "northstar"
+    },
+    {
+      "login": "priya.raman@northstar-supply.example",
+      "name": "Priya Raman",
+      "password": "northstar"
+    },
+    {
+      "login": "tomas.kowalski@northstar-supply.example",
+      "name": "Tomas Kowalski",
+      "password": "northstar"
+    }
+  ],
+  "backup": {
+    "file": "northstar-odoo20-2026-11-07.zip",
+    "bytes": 8717415,
+    "sha256": "6a762fa160ccbad2422a17eaa6f6d1e687e785f4d9d4cd240f76e64297cd2aae",
+    "format": "Odoo backup zip (dump.sql, filestore, manifest.json)",
+    "dump_sql_bytes": 67210493
+  },
+  "create_date": "set to each record's business date for the models listed in create_date_models (the rest keep their load time)",
+  "create_date_models": [
+    "crm_lead",
+    "sale_order",
+    "sale_order_line",
+    "purchase_order",
+    "purchase_order_line",
+    "pos_session",
+    "pos_order",
+    "pos_order_line",
+    "pos_payment",
+    "account_move",
+    "account_move_line",
+    "account_payment",
+    "account_partial_reconcile",
+    "account_full_reconcile",
+    "account_bank_statement_line",
+    "account_bank_statement",
+    "stock_picking",
+    "stock_move",
+    "stock_move_line",
+    "mrp_production",
+    "mrp_workorder",
+    "mrp_workcenter_productivity",
+    "mrp_unbuild",
+    "hr_leave",
+    "hr_leave_allocation",
+    "hr_attendance",
+    "account_analytic_line",
+    "project_task",
+    "account_account (opening day)",
+    "account_fiscal_position (opening day)",
+    "account_journal (opening day)",
+    "account_tax (opening day)",
+    "account_tax_group (opening day)",
+    "crm_lost_reason (opening day)",
+    "crm_team_member (opening day)",
+    "hr_department (opening day)",
+    "hr_employee (opening day)",
+    "hr_job (opening day)",
+    "hr_work_entry_type (opening day)",
+    "mrp_bom (opening day)",
+    "mrp_workcenter (opening day)",
+    "mrp_workcenter_productivity_loss (opening day)",
+    "pos_config (opening day)",
+    "pos_payment_method (opening day)",
+    "product_category (opening day)",
+    "product_template (opening day)",
+    "project_milestone (opening day)",
+    "project_project (opening day)",
+    "project_project_stage (opening day)",
+    "project_tags (opening day)",
+    "project_task_type (opening day)",
+    "project_update (opening day)",
+    "res_company (opening day)",
+    "res_partner (opening day)",
+    "res_users (opening day)",
+    "resource_calendar (opening day)",
+    "resource_calendar_leaves (opening day)",
+    "stock_location (opening day)",
+    "stock_quant (opening day)",
+    "stock_scrap_reason_tag (opening day)",
+    "stock_warehouse_orderpoint (opening day)",
+    "utm_source (opening day)",
+    "product_product",
+    "crm_lead days to assign / close recomputed",
+    "mail_message (chatter of these documents)"
+  ],
+  "license": "CC0-1.0 (https://creativecommons.org/publicdomain/zero/1.0/); credit asked, not required",
+  "credit": "Demo data: Northstar by Speak To Your Database, speaktoyourdatabase.com/northstar"
+}
