@@ -1,13 +1,15 @@
 # Northstar demo company for Odoo 20 Community, by Speak To Your Database (speaktoyourdatabase.com/northstar).
-# Put this file and the northstar-odoo20-*.zip backup in the same folder, then run: docker compose up
-# The first start restores the backup (one or two minutes); later starts keep your data. Odoo opens at http://localhost:8069
-# (another port: NORTHSTAR_PORT=8070 docker compose up). Start over with the original data: docker compose down -v
+# Unzip the package (northstar-odoo20.zip) into an empty folder, then run: docker compose up
+# The first start restores the database (one or two minutes); later starts keep your data. When you see "Northstar is ready", open
+# http://localhost:8069 (another port: NORTHSTAR_PORT=8070 docker compose up). Start over with the original data: docker compose down -v
+# The database's own log is not shown here: docker compose logs db. Needs Docker Compose 2.20 or later.
 # Official images only: odoo and postgres from Docker Hub.
 name: northstar-demo
 
 services:
   db:
     image: postgres:16
+    attach: false
     environment:
       POSTGRES_USER: odoo
       POSTGRES_PASSWORD: odoo
@@ -20,7 +22,8 @@ services:
       timeout: 5s
       retries: 60
 
-  # Runs once at each start: restores the backup when the database is not there yet, otherwise does nothing.
+  # Runs once at each start: restores the database when it is not there yet, otherwise does nothing. Odoo's own technical lines go to a file in
+  # this container (not to your window); a failure prints one plain line with the command that shows them.
   restore:
     image: odoo:20.0-20261102
     depends_on:
@@ -30,26 +33,58 @@ services:
       PGHOST: db
       PGUSER: odoo
       PGPASSWORD: odoo
+      LC_ALL: C.UTF-8
     volumes:
       - odoo-data:/var/lib/odoo
       - ./:/snapshot:ro
     entrypoint: ["/bin/bash", "-c"]
     command:
       - |
-        set -eu
-        if psql -d postgres -tAc "SELECT 1 FROM pg_database WHERE datname = 'northstar'" | grep -q 1; then
+        log=/tmp/northstar-restore.log
+        : > "$$log"
+        fail() {
+          echo "Northstar could not be restored: $$1 $$2 To see the details: docker compose cp restore:$$log northstar-restore.log"
+          exit 1
+        }
+        if psql -d postgres -tAc "SELECT 1 FROM pg_database WHERE datname = 'northstar'" 2>>"$$log" | grep -q 1; then
           echo "Northstar database found: nothing to restore."
           exit 0
         fi
         zip=$$(ls -1 /snapshot/northstar-odoo20-*.zip 2>/dev/null | sort | tail -n 1 || true)
         if [ -z "$$zip" ]; then
-          echo "No northstar-odoo20-*.zip in this folder. Download it from the release page and put it next to docker-compose.yml."
+          echo "Northstar could not be restored: no northstar-odoo20-*.zip next to docker-compose.yml. Unzip the whole Northstar package into an empty folder and run docker compose up there."
           exit 1
         fi
-        echo "Restoring $$(basename "$$zip"), one or two minutes the first time..."
-        odoo db --db_host db --db_user odoo --db_password odoo load --force northstar_restoring "$$zip"
-        odoo db --db_host db --db_user odoo --db_password odoo rename --force northstar_restoring northstar
-        echo "Northstar restored. Odoo starts now."
+        name=$$(basename "$$zip")
+        if [ -f /snapshot/SHA256SUMS ]; then
+          want=$$(awk -v n="$$name" '$$2 == n { print $$1 }' /snapshot/SHA256SUMS)
+          have=$$(sha256sum "$$zip" | cut -d' ' -f1)
+          if [ -n "$$want" ] && [ "$$want" != "$$have" ]; then
+            fail "the database file $$name does not match its checksum (the download is damaged)." "Download the package again, unzip it into an empty folder and run docker compose up."
+          fi
+        fi
+        if ! python3 -c 'import sys, zipfile; sys.exit(1 if zipfile.ZipFile(sys.argv[1]).testzip() else 0)' "$$zip" 2>>"$$log"; then
+          fail "the database file $$name is damaged." "Download the package again, unzip it into an empty folder and run docker compose up."
+        fi
+        echo "Restoring Northstar, about 1 to 2 minutes the first time."
+        (
+          odoo db --db_host db --db_user odoo --db_password odoo load --force northstar_restoring "$$zip" &&
+          odoo db --db_host db --db_user odoo --db_password odoo rename --force northstar_restoring northstar
+        ) >>"$$log" 2>&1 &
+        pid=$$!
+        t=0
+        while kill -0 "$$pid" 2>/dev/null; do
+          sleep 1
+          t=$$((t + 1))
+          if [ $$((t % 10)) -eq 0 ]; then
+            echo "Still restoring, $$t s so far, usually 60 to 120 s."
+          fi
+        done
+        if wait "$$pid"; then
+          echo "Northstar restored in $$t s. Starting Odoo."
+        else
+          fail "the restore stopped after $$t s." "Run docker compose down -v, then docker compose up again; if it stops again, write to contact@speaktoyourdatabase.com with the details."
+        fi
 
   odoo:
     image: odoo:20.0-20261102
@@ -64,6 +99,23 @@ services:
       PASSWORD: odoo
     volumes:
       - odoo-data:/var/lib/odoo
+    # Odoo logs warnings and errors only (its scheduled-job lines stay quiet). Two harmless lines of the official image are left out (the
+    # extra-addons folder its configuration names, which holds nothing, and the missing markdown library of chat messages). The line below prints once, when Odoo answers.
+    entrypoint: ["/bin/bash", "-c"]
+    command:
+      - |
+        trap 'kill -TERM "$$pid" 2>/dev/null' TERM INT
+        /entrypoint.sh odoo --log-level=warn --log-handler=odoo.tools.config:ERROR --log-handler=odoo.addons.mail.controllers.attachment:ERROR &
+        pid=$$!
+        (
+          until python3 -c 'import urllib.request, sys; sys.exit(0 if urllib.request.urlopen("http://127.0.0.1:8069/web/login", timeout=60).status == 200 else 1)' >/dev/null 2>&1; do
+            sleep 2
+          done
+          echo "Northstar is ready: open http://localhost:${NORTHSTAR_PORT:-8069} and log in as admin / admin (more logins in the README). Stop with Ctrl+C."
+        ) &
+        wait "$$pid"
+        wait "$$pid"
+        exit $$?
 
 volumes:
   db-data:

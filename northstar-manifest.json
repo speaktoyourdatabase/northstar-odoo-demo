@@ -2,10 +2,15 @@
   "name": "Northstar Office & Industrial Supply Inc. (fictional), Odoo 20 Community demo database",
   "publisher": "Speak To Your Database",
   "url": "https://speaktoyourdatabase.com/northstar",
-  "build_date": "2026-11-08",
-  "data_from": "2025-11-07",
-  "data_until": "2026-11-07",
-  "refresh": "monthly",
+  "build_date": "2026-11-10",
+  "data_from": "2025-11-09",
+  "data_until": "2026-11-09",
+  "refresh": "weekly",
+  "package": {
+    "file": "northstar-odoo20.zip",
+    "url": "https://github.com/speaktoyourdatabase/northstar-odoo-demo/releases/latest/download/northstar-odoo20.zip",
+    "holds": "docker-compose.yml, the database backup, README.md, LICENSE, TERMS.md, northstar-manifest.json, SHA256SUMS"
+  },
   "odoo_version": "20.0-20261102",
   "odoo_edition": "Community",
   "docker_images": {
@@ -29,64 +34,64 @@
     "Calendar",
     "Discuss",
     "Skills",
-    "project_todo"
+    "Timesheets and To-Do"
   ],
   "modules_outside_community": [],
   "counts": [
     {
       "app": "Sales",
       "label": "Quotations and sales orders",
-      "count": 2194
+      "count": 2197
     },
     {
       "app": "Sales",
       "label": "Confirmed sales orders",
-      "count": 1313
+      "count": 1325
     },
     {
       "app": "Sales",
       "label": "Sales order lines",
-      "count": 6370
+      "count": 6387
     },
     {
       "app": "CRM",
       "label": "Leads and opportunities (won, lost and open)",
-      "count": 603
+      "count": 610
     },
     {
       "app": "CRM",
       "label": "Won opportunities",
-      "count": 273
+      "count": 268
     },
     {
       "app": "CRM",
       "label": "Lost (archived with a reason)",
-      "count": 298
+      "count": 307
     },
     {
       "app": "Purchase",
       "label": "Purchase orders",
-      "count": 472
+      "count": 462
     },
     {
       "app": "Inventory",
       "label": "Products (sold, bought, made)",
-      "count": 147
+      "count": 159
     },
     {
       "app": "Inventory",
       "label": "Transfers done (receipts, deliveries)",
-      "count": 2205
+      "count": 2194
     },
     {
       "app": "Inventory",
       "label": "Stock moves done",
-      "count": 10690
+      "count": 10655
     },
     {
       "app": "Invoicing",
       "label": "Customer invoices",
-      "count": 1830
+      "count": 1852
     },
     {
       "app": "Invoicing",
@@ -96,17 +101,17 @@
     {
       "app": "Invoicing",
       "label": "Vendor bills",
-      "count": 624
+      "count": 622
     },
     {
       "app": "Invoicing",
       "label": "Payments",
-      "count": 2316
+      "count": 2340
     },
     {
       "app": "Invoicing",
       "label": "Journal entries posted (all kinds)",
-      "count": 5355
+      "count": 5402
     },
     {
       "app": "Point of Sale",
@@ -116,17 +121,17 @@
     {
       "app": "Point of Sale",
       "label": "Counter tickets (refunds included)",
-      "count": 3514
+      "count": 3512
     },
     {
       "app": "Manufacturing",
       "label": "Manufacturing orders",
-      "count": 175
+      "count": 179
     },
     {
       "app": "Manufacturing",
       "label": "Work orders",
-      "count": 441
+      "count": 451
     },
     {
       "app": "Manufacturing",
@@ -146,7 +151,7 @@
     {
       "app": "Time Off",
       "label": "Time off requests",
-      "count": 113
+      "count": 114
     },
     {
       "app": "Time Off",
@@ -156,22 +161,22 @@
     {
       "app": "Attendances",
       "label": "Attendance records",
-      "count": 1399
+      "count": 1379
     },
     {
       "app": "Project",
       "label": "Projects",
-      "count": 53
+      "count": 52
     },
     {
       "app": "Project",
       "label": "Tasks",
-      "count": 479
+      "count": 512
     },
     {
       "app": "Timesheets",
       "label": "Timesheet lines",
-      "count": 1412
+      "count": 1425
     },
     {
       "app": "Contacts",
@@ -212,11 +217,11 @@
     }
   ],
   "backup": {
-    "file": "northstar-odoo20-2026-11-07.zip",
-    "bytes": 8717415,
-    "sha256": "6a762fa160ccbad2422a17eaa6f6d1e687e785f4d9d4cd240f76e64297cd2aae",
+    "file": "northstar-odoo20-2026-11-09.zip",
+    "bytes": 8714429,
+    "sha256": "6326b994f81430346c56f59b699724ca2b6a075e09ed6aa092f3849938063a2e",
     "format": "Odoo backup zip (dump.sql, filestore, manifest.json)",
-    "dump_sql_bytes": 67210493
+    "dump_sql_bytes": 66532795
   },
   "create_date": "set to each record's business date for the models listed in create_date_models (the rest keep their load time)",
   "create_date_models": [
@@ -253,12 +258,16 @@
     "account_journal (opening day)",
     "account_tax (opening day)",
     "account_tax_group (opening day)",
+    "calendar_event (opening day)",
     "crm_lost_reason (opening day)",
     "crm_team_member (opening day)",
     "hr_department (opening day)",
     "hr_employee (opening day)",
+    "hr_employee_skill (opening day)",
     "hr_job (opening day)",
+    "hr_skill_type (opening day)",
     "hr_work_entry_type (opening day)",
+    "mail_message (opening day)",
     "mrp_bom (opening day)",
     "mrp_workcenter (opening day)",
     "mrp_workcenter_productivity_loss (opening day)",
@@ -274,9 +283,11 @@
     "project_update (opening day)",
     "res_company (opening day)",
     "res_partner (opening day)",
+    "res_partner_category (opening day)",
     "res_users (opening day)",
     "resource_calendar (opening day)",
     "resource_calendar_leaves (opening day)",
+    "spreadsheet_dashboard (opening day)",
     "stock_location (opening day)",
     "stock_quant (opening day)",
     "stock_scrap_reason_tag (opening day)",

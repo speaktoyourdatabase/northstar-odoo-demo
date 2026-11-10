@@ -1,13 +1,40 @@
+**[Download Northstar](https://github.com/speaktoyourdatabase/northstar-odoo-demo/releases/latest/download/northstar-odoo20.zip)** | [Releases page](https://github.com/speaktoyourdatabase/northstar-odoo-demo/releases)
+
+The green Code > Download ZIP button does not contain the database.
+
+## Quick start
+
+1. Install [Docker Desktop](https://www.docker.com/products/docker-desktop/) and start it.
+2. Unzip the download into an empty folder, open a terminal in it and run `docker compose up`. When it says `Northstar is ready`, open <http://localhost:8069> and log in with `admin` / `admin`.
+
+The details are below.
+
 # Northstar: a fictional company for Odoo 20 Community
 
 Northstar Office & Industrial Supply Inc. is a fictional US company in Columbus, Ohio: a B2B distributor of office, facility and light
 industrial supplies with about 25 employees. It comes as a ready-to-run Odoo 20 Community database with 12 months of history, every app
 connected to the others, and books that are right to the cent.
 
-**Data until 7 November 2026, refreshed every month.** (History from 7 November 2025. Odoo 20.0-20261102, Community edition.)
+**Data until 9 November 2026, refreshed every week.** (History from 9 November 2025. Odoo 20.0-20261102, Community edition.)
 
-Free, no sign-in, no time limit. Data only: you get a standard Odoo backup and a small Docker file that uses the official Odoo and
-PostgreSQL images.
+The download is free, with no sign-in and no time limit. Data only: one zip holds a standard Odoo backup and a small Docker file that uses the
+official Odoo and PostgreSQL images.
+
+## Four ways to use Northstar
+
+1. **Download it** (Available now): Download northstar-odoo20.zip from the latest release, unzip it into an empty folder, run `docker compose up` and open Odoo on your own computer. Free, no sign-in.
+2. **Ask it with AI** (Available now): Sign in free at [speaktoyourdatabase.com](https://speaktoyourdatabase.com/northstar?utm_source=github&utm_medium=readme), get 20 free prompts and ask Northstar in ChatGPT, Claude or the Speak To Your Database chat. It is the sample every new account has.
+3. **Load it into your own Odoo** (Coming soon): Load Northstar into your own empty Odoo 20 with an administrator API key, then a new day every night.
+4. **Keep your download alive** (Coming soon): Your downloaded copy keeps living on your computer, a new day every night.
+
+**Running Northstar on a server? Our free guides:**
+
+- [Secure Odoo on a VPS](https://www.universal-db-ai.com/guides/secure-odoo-vps?utm_source=github&utm_medium=readme)
+- [Odoo on a subdomain with HTTPS](https://www.universal-db-ai.com/guides/odoo-subdomain-https?utm_source=github&utm_medium=readme)
+- [Complete Odoo backups](https://www.universal-db-ai.com/guides/odoo-backup-best-practices?utm_source=github&utm_medium=readme)
+- [A safe Odoo sandbox](https://www.universal-db-ai.com/guides/odoo-sandbox-environment?utm_source=github&utm_medium=readme)
+
+**Planning Odoo for your own company?** We install it, migrate your data and build what you need: [https://speaktoyourdatabase.com/catalogue?utm_source=github&utm_medium=readme](https://speaktoyourdatabase.com/catalogue?utm_source=github&utm_medium=readme)
 
 ## What Northstar is
 
@@ -23,8 +50,10 @@ PostgreSQL images.
 ## What Northstar is not
 
 - **Not random records.** Every figure follows from a plan of one company's year, so totals, trends and the links between apps make sense.
-- **Not a real company.** Names, addresses, emails (on `.example` domains), phone numbers (555-01xx) and tax IDs are invented. No real
-  person, business or transaction is shown. Every PDF footer and the About note in the database say so.
+- **Not a real company.** Names, addresses, emails (on `.example` domains), phone numbers (555-01xx) and tax IDs are invented. The one
+  exception is us: Speak To Your Database, which made Northstar, appears in it as Northstar's software and Odoo supplier, with our contact
+  address and our founder, who agreed to it. No other real person, business or transaction is shown. Every PDF footer and the About note
+  in the database say so.
 - **Not Odoo's own demo data, and not Enterprise.** It is built on Odoo 20 Community only.
 
 ## What is inside
@@ -33,34 +62,34 @@ Apps: Sales, CRM, Purchase, Inventory, Invoicing, Point of Sale, Manufacturing, 
 
 | App | Records | Count |
 |---|---|---|
-| Sales | Quotations and sales orders | 2,194 |
-|  | Confirmed sales orders | 1,313 |
-|  | Sales order lines | 6,370 |
-| CRM | Leads and opportunities (won, lost and open) | 603 |
-|  | Won opportunities | 273 |
-|  | Lost (archived with a reason) | 298 |
-| Purchase | Purchase orders | 472 |
-| Inventory | Products (sold, bought, made) | 147 |
-|  | Transfers done (receipts, deliveries) | 2,205 |
-|  | Stock moves done | 10,690 |
-| Invoicing | Customer invoices | 1,830 |
+| Sales | Quotations and sales orders | 2,197 |
+|  | Confirmed sales orders | 1,325 |
+|  | Sales order lines | 6,387 |
+| CRM | Leads and opportunities (won, lost and open) | 610 |
+|  | Won opportunities | 268 |
+|  | Lost (archived with a reason) | 307 |
+| Purchase | Purchase orders | 462 |
+| Inventory | Products (sold, bought, made) | 159 |
+|  | Transfers done (receipts, deliveries) | 2,194 |
+|  | Stock moves done | 10,655 |
+| Invoicing | Customer invoices | 1,852 |
 |  | Customer credit notes | 70 |
-|  | Vendor bills | 624 |
-|  | Payments | 2,316 |
-|  | Journal entries posted (all kinds) | 5,355 |
+|  | Vendor bills | 622 |
+|  | Payments | 2,340 |
+|  | Journal entries posted (all kinds) | 5,402 |
 | Point of Sale | Counter sessions | 250 |
-|  | Counter tickets (refunds included) | 3,514 |
-| Manufacturing | Manufacturing orders | 175 |
-|  | Work orders | 441 |
+|  | Counter tickets (refunds included) | 3,512 |
+| Manufacturing | Manufacturing orders | 179 |
+|  | Work orders | 451 |
 |  | Bills of materials | 9 |
 | Employees | Employees (active) | 25 |
 |  | Departments | 8 |
-| Time Off | Time off requests | 113 |
+| Time Off | Time off requests | 114 |
 |  | Allocations | 88 |
-| Attendances | Attendance records | 1,399 |
-| Project | Projects | 53 |
-|  | Tasks | 479 |
-| Timesheets | Timesheet lines | 1,412 |
+| Attendances | Attendance records | 1,379 |
+| Project | Projects | 52 |
+|  | Tasks | 512 |
+| Timesheets | Timesheet lines | 1,425 |
 | Contacts | Customer companies | 150 |
 |  | Vendor companies | 37 |
 
@@ -68,31 +97,36 @@ The full list, with the build date and the checksum of the file, is in `northsta
 
 ## Run it with Docker (Windows, macOS, Linux)
 
-1. Install Docker Desktop (Windows, macOS) or Docker Engine with the Compose plugin (Linux).
-2. From the latest release, download two files into one empty folder: `northstar-odoo20-2026-11-07.zip` (8.7 MB) and `docker-compose.yml`.
+1. Install Docker Desktop (Windows, macOS) or Docker Engine with the Compose plugin (Linux). Docker Compose 2.20 or later is needed; every
+   current Docker Desktop has it.
+2. [Download Northstar](https://github.com/speaktoyourdatabase/northstar-odoo-demo/releases/latest/download/northstar-odoo20.zip) (`northstar-odoo20.zip`, about 8.7 MB) and unzip it into an empty folder. It holds the Docker
+   file, the database, this README and the checksums, and nothing else is needed.
 3. Open a terminal in that folder and run:
 
    ```
    docker compose up
    ```
 
-4. The first start downloads the two official images once, then restores the database (one or two minutes on a laptop). When you see
-   `Northstar restored`, open <http://localhost:8069> and log in
-   with one of the logins below.
+4. The first start takes a few minutes, and this is normal: Docker downloads the two official images once, then Northstar prints
+   `Restoring Northstar` and a `Still restoring` line every 10 seconds (usually 60 to 120 seconds in all). You do not need to do anything.
+5. When you see `Northstar is ready`, open the address. The window stays open while Northstar runs.
+   Log in with one of the logins below.
 
 Good to know:
 
 - Later starts keep your data and open in seconds. Stop with `Ctrl+C` (or `docker compose down`), start again with `docker compose up`.
+- If the restore fails, Northstar prints one line that says what failed, what to do and the command that shows the details.
 - Port 8069 already in use? Run `NORTHSTAR_PORT=8070 docker compose up` (PowerShell: `$env:NORTHSTAR_PORT=8070; docker compose up`).
 - Start over with the original data: `docker compose down -v`, then `docker compose up`. This deletes every change you made.
 - Odoo listens on your own computer only (127.0.0.1), not on your network.
 
 ## Restore it without Docker (Odoo database manager)
 
-The same zip is a standard Odoo backup (`dump.sql`, `filestore`, `manifest.json`). It restores on any self-hosted Odoo 20 Community:
+The package holds the database as `northstar-odoo20-2026-11-09.zip`, a standard Odoo backup (`dump.sql`, `filestore`, `manifest.json`). It restores on any
+self-hosted Odoo 20 Community:
 
 1. Open `/web/database/manager` on your Odoo 20 (for example <http://localhost:8069/web/database/manager>).
-2. Click **Restore Database**, enter your master password, choose `northstar-odoo20-2026-11-07.zip`, name the database `northstar`.
+2. Click **Restore Database**, enter your master password, choose `northstar-odoo20-2026-11-09.zip` (unzip the package first), name the database `northstar`.
 3. Keep **This database is a copy** selected (it gives the restored database its own identity), then click **Continue**.
 4. Open the new database and log in with one of the logins below.
 
@@ -114,11 +148,11 @@ password in `docker-compose.yml`.
 
 Northstar sends no email: the database has no mail server, and every address is on a `.example` domain that cannot receive mail.
 
-## Fresh every month
+## Fresh data
 
-**Data until 7 November 2026, refreshed every month.** Each month we publish a new release whose 12 months of history end the day before it
-was built. Your copy does not change by itself: to move to a new month, download the new zip, run `docker compose down -v`, replace the old
-zip with the new one and run `docker compose up`.
+**Data until 9 November 2026, refreshed every week.** We publish a new release every week; its 12 months of history end the day before it
+was built. Your copy does not change by itself: to move to a newer release, download the package again, run `docker compose down -v` in the old
+folder, unzip the new package into a new empty folder and run `docker compose up` there.
 
 ## Licence and credit
 
@@ -130,7 +164,7 @@ on it, we would be glad of a short credit:
 Demo data: Northstar by Speak To Your Database, speaktoyourdatabase.com/northstar
 ```
 
-More about Northstar: <https://speaktoyourdatabase.com/northstar>
+More about Northstar: <https://speaktoyourdatabase.com/northstar?utm_source=github&utm_medium=readme>
 
 You can also ask Northstar questions in plain words in ChatGPT or Claude through Speak To Your Database.
 
@@ -138,12 +172,18 @@ You can also ask Northstar questions in plain words in ChatGPT or Claude through
 
 **Is any of it real?** No. The company, its customers, vendors, products, people and every document are fictional and generated.
 
-**Is this the sample company inside Speak To Your Database?** Yes, it is the same company: you can ask it questions in plain words in ChatGPT or Claude through Speak To Your Database. That hosted copy is refreshed on its own schedule, so its latest days can differ from this release.
+**Is this the sample company inside Speak To Your Database?** Yes, it is the same company: you can ask it questions in plain words in
+ChatGPT or Claude through Speak To Your Database. That hosted copy is refreshed on its own schedule, so its latest days can differ from
+this release.
+
+**How often is it refreshed?** It is refreshed every week. The data-until date is at the top of this page and in every release.
 
 **Which Odoo version do I need?** Odoo 20 Community, build 20.0-20261102 or later. The Docker file pins the images this release was
 tested with (`odoo:20.0-20261102`, `postgres:16`).
 
-**Can I trust the download?** Each release lists the SHA-256 of the zip in `SHA256SUMS` and in `northstar-manifest.json`.
+**Can I trust the download?** The package holds `SHA256SUMS` with the SHA-256 of every file in it, the release page shows the SHA-256 of
+the package, and `northstar-manifest.json` has the one of the database file. Docker's restore step checks the database file against
+`SHA256SUMS` before it starts.
 
 **Can I use it at work, in training or in a product demo?** Yes. It is CC0 1.0: see [LICENSE](LICENSE) and [TERMS.md](TERMS.md).
 
