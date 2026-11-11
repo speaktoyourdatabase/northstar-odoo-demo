@@ -2,20 +2,21 @@
   "name": "Northstar Office & Industrial Supply Inc. (fictional), Odoo 20 Community demo database",
   "publisher": "Speak To Your Database",
   "url": "https://speaktoyourdatabase.com/northstar",
-  "build_date": "2026-11-10",
-  "data_from": "2025-11-09",
-  "data_until": "2026-11-09",
+  "build_date": "2026-11-11",
+  "data_from": "2025-11-10",
+  "data_until": "2026-11-10",
   "refresh": "weekly",
   "package": {
     "file": "northstar-odoo20.zip",
     "url": "https://github.com/speaktoyourdatabase/northstar-odoo-demo/releases/latest/download/northstar-odoo20.zip",
-    "holds": "docker-compose.yml, the database backup, README.md, LICENSE, TERMS.md, northstar-manifest.json, SHA256SUMS"
+    "holds": "docker-compose.yml, the database backup, README.md, README.fr.md, LICENSE, TERMS.md, northstar-manifest.json, init/ (the optional Northstar Live key step), .env.example, SHA256SUMS"
   },
   "odoo_version": "20.0-20261102",
   "odoo_edition": "Community",
   "docker_images": {
     "odoo": "odoo:20.0-20261102",
-    "postgres": "postgres:16"
+    "postgres": "postgres:16",
+    "northstar_live_relay": "ghcr.io/speaktoyourdatabase/northstar-live:1.1.0@sha256:84804847fb52685b7278b4d8335cad7425960126af727ec7b1ec537e2ebd5c8d"
   },
   "postgres_version_built_on": "16.15",
   "apps": [
@@ -41,37 +42,37 @@
     {
       "app": "Sales",
       "label": "Quotations and sales orders",
-      "count": 2197
+      "count": 2194
     },
     {
       "app": "Sales",
       "label": "Confirmed sales orders",
-      "count": 1325
+      "count": 1321
     },
     {
       "app": "Sales",
       "label": "Sales order lines",
-      "count": 6387
+      "count": 6398
     },
     {
       "app": "CRM",
       "label": "Leads and opportunities (won, lost and open)",
-      "count": 610
+      "count": 613
     },
     {
       "app": "CRM",
       "label": "Won opportunities",
-      "count": 268
+      "count": 282
     },
     {
       "app": "CRM",
       "label": "Lost (archived with a reason)",
-      "count": 307
+      "count": 302
     },
     {
       "app": "Purchase",
       "label": "Purchase orders",
-      "count": 462
+      "count": 478
     },
     {
       "app": "Inventory",
@@ -81,17 +82,17 @@
     {
       "app": "Inventory",
       "label": "Transfers done (receipts, deliveries)",
-      "count": 2194
+      "count": 2223
     },
     {
       "app": "Inventory",
       "label": "Stock moves done",
-      "count": 10655
+      "count": 10742
     },
     {
       "app": "Invoicing",
       "label": "Customer invoices",
-      "count": 1852
+      "count": 1835
     },
     {
       "app": "Invoicing",
@@ -101,37 +102,37 @@
     {
       "app": "Invoicing",
       "label": "Vendor bills",
-      "count": 622
+      "count": 645
     },
     {
       "app": "Invoicing",
       "label": "Payments",
-      "count": 2340
+      "count": 2346
     },
     {
       "app": "Invoicing",
       "label": "Journal entries posted (all kinds)",
-      "count": 5402
+      "count": 5410
     },
     {
       "app": "Point of Sale",
       "label": "Counter sessions",
-      "count": 250
+      "count": 251
     },
     {
       "app": "Point of Sale",
       "label": "Counter tickets (refunds included)",
-      "count": 3512
+      "count": 3529
     },
     {
       "app": "Manufacturing",
       "label": "Manufacturing orders",
-      "count": 179
+      "count": 180
     },
     {
       "app": "Manufacturing",
       "label": "Work orders",
-      "count": 451
+      "count": 447
     },
     {
       "app": "Manufacturing",
@@ -151,7 +152,7 @@
     {
       "app": "Time Off",
       "label": "Time off requests",
-      "count": 114
+      "count": 115
     },
     {
       "app": "Time Off",
@@ -166,17 +167,17 @@
     {
       "app": "Project",
       "label": "Projects",
-      "count": 52
+      "count": 44
     },
     {
       "app": "Project",
       "label": "Tasks",
-      "count": 512
+      "count": 452
     },
     {
       "app": "Timesheets",
       "label": "Timesheet lines",
-      "count": 1425
+      "count": 1418
     },
     {
       "app": "Contacts",
@@ -217,11 +218,11 @@
     }
   ],
   "backup": {
-    "file": "northstar-odoo20-2026-11-09.zip",
-    "bytes": 8714429,
-    "sha256": "6326b994f81430346c56f59b699724ca2b6a075e09ed6aa092f3849938063a2e",
+    "file": "northstar-odoo20-2026-11-10.zip",
+    "bytes": 8732583,
+    "sha256": "3744061ae13b3c4be97af35699249c4821cad818cd9cf87a0825ef92e83eb001",
     "format": "Odoo backup zip (dump.sql, filestore, manifest.json)",
-    "dump_sql_bytes": 66532795
+    "dump_sql_bytes": 66748091
   },
   "create_date": "set to each record's business date for the models listed in create_date_models (the rest keep their load time)",
   "create_date_models": [

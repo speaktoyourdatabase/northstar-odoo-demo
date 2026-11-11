@@ -1,9 +1,13 @@
 # Northstar demo company for Odoo 20 Community, by Speak To Your Database (speaktoyourdatabase.com/northstar).
 # Unzip the package (northstar-odoo20.zip) into an empty folder, then run: docker compose up
 # The first start restores the database (one or two minutes); later starts keep your data. When you see "Northstar is ready", open
-# http://localhost:8069 (another port: NORTHSTAR_PORT=8070 docker compose up). Start over with the original data: docker compose down -v
+# http://localhost:8069 (another port: NORTHSTAR_PORT=8079 docker compose up). Start over with the original data: docker compose down -v
 # The database's own log is not shown here: docker compose logs db. Needs Docker Compose 2.20 or later.
-# Official images only: odoo and postgres from Docker Hub.
+# Odoo and PostgreSQL: the official images from Docker Hub.
+#
+# New days every night (optional, Northstar Live): docker compose --profile live up -d, then open http://localhost:8070 and click Pair.
+# Without --profile live, nothing here connects to our service: the two services marked "profiles: [live]" do not start, and their image is not
+# downloaded. Switched on later, Live uses this same install (same data, nothing to download again but the relay's small image).
 name: northstar-demo
 
 services:
@@ -12,7 +16,7 @@ services:
     attach: false
     environment:
       POSTGRES_USER: odoo
-      POSTGRES_PASSWORD: odoo
+      POSTGRES_PASSWORD: ${NORTHSTAR_DB_PASSWORD:-odoo}
       POSTGRES_DB: postgres
     volumes:
       - db-data:/var/lib/postgresql/data
@@ -21,6 +25,7 @@ services:
       interval: 2s
       timeout: 5s
       retries: 60
+    restart: unless-stopped
 
   # Runs once at each start: restores the database when it is not there yet, otherwise does nothing. Odoo's own technical lines go to a file in
   # this container (not to your window); a failure prints one plain line with the command that shows them.
@@ -32,7 +37,7 @@ services:
     environment:
       PGHOST: db
       PGUSER: odoo
-      PGPASSWORD: odoo
+      PGPASSWORD: ${NORTHSTAR_DB_PASSWORD:-odoo}
       LC_ALL: C.UTF-8
     volumes:
       - odoo-data:/var/lib/odoo
@@ -68,8 +73,8 @@ services:
         fi
         echo "Restoring Northstar, about 1 to 2 minutes the first time."
         (
-          odoo db --db_host db --db_user odoo --db_password odoo load --force northstar_restoring "$$zip" &&
-          odoo db --db_host db --db_user odoo --db_password odoo rename --force northstar_restoring northstar
+          odoo db --db_host db --db_user odoo load --force northstar_restoring "$$zip" &&
+          odoo db --db_host db --db_user odoo rename --force northstar_restoring northstar
         ) >>"$$log" 2>&1 &
         pid=$$!
         t=0
@@ -85,6 +90,7 @@ services:
         else
           fail "the restore stopped after $$t s." "Run docker compose down -v, then docker compose up again; if it stops again, write to contact@speaktoyourdatabase.com with the details."
         fi
+    restart: "no"
 
   odoo:
     image: odoo:20.0-20261102
@@ -96,7 +102,7 @@ services:
     environment:
       HOST: db
       USER: odoo
-      PASSWORD: odoo
+      PASSWORD: ${NORTHSTAR_DB_PASSWORD:-odoo}
     volumes:
       - odoo-data:/var/lib/odoo
     # Odoo logs warnings and errors only (its scheduled-job lines stay quiet). Two harmless lines of the official image are left out (the
@@ -116,7 +122,71 @@ services:
         wait "$$pid"
         wait "$$pid"
         exit $$?
+    restart: unless-stopped
+
+  # Northstar Live only (docker compose --profile live up -d). Runs once at each start of Live, never before the restore above has finished (it waits
+  # for it to end well): makes (or checks) the Odoo API key the relay uses. The key is written to a volume only the relay mounts; it never leaves this
+  # computer. Switched on later on an install that started without Live, it finds the database already there and only makes the key.
+  live-init:
+    image: odoo:20.0-20261102
+    profiles: [live]
+    user: root
+    depends_on:
+      db:
+        condition: service_healthy
+      restore:
+        condition: service_completed_successfully
+    environment:
+      PGHOST: db
+      PGUSER: odoo
+      PGPASSWORD: ${NORTHSTAR_DB_PASSWORD:-odoo}
+      NORTHSTAR_DB: northstar
+      RELAY_UID: "10001"
+      NORTHSTAR_LIVE_PAGE_PORT: ${NORTHSTAR_LIVE_PAGE_PORT:-8070}
+    volumes:
+      - odoo-data:/var/lib/odoo
+      - relay-key:/relay-key
+      - ./init:/init:ro
+    entrypoint: ["/bin/bash", "/init/init.sh"]
+    restart: "no"
+
+  # Northstar Live only: the relay. It connects out to our service, forwards only the daily-life calls it allows to the Odoo above and adds the key
+  # itself. Its page, with the pairing code and the Pair button: http://localhost:8070 (on this computer only).
+  northstar-live:
+    image: ${NORTHSTAR_LIVE_IMAGE:-ghcr.io/speaktoyourdatabase/northstar-live:1.1.0@sha256:84804847fb52685b7278b4d8335cad7425960126af727ec7b1ec537e2ebd5c8d}
+    profiles: [live]
+    attach: false
+    depends_on:
+      live-init:
+        condition: service_completed_successfully
+      odoo:
+        condition: service_started
+    environment:
+      NORTHSTAR_LIVE_URL: ${NORTHSTAR_LIVE_URL:-wss://live.speaktoyourdatabase.com/v1/relay}
+      NORTHSTAR_LIVE_PAIR_URL: ${NORTHSTAR_LIVE_PAIR_URL:-https://speaktoyourdatabase.com/northstar/app}
+      NORTHSTAR_LIVE_TRANSPORT: ${NORTHSTAR_LIVE_TRANSPORT:-auto}
+      NORTHSTAR_LIVE_ODOO_URL: http://odoo:8069
+      NORTHSTAR_LIVE_ODOO_DB: northstar
+      NORTHSTAR_LIVE_KEY_FILE: /run/northstar-key/odoo_key
+      NORTHSTAR_LIVE_PAGE: 0.0.0.0:8070
+      NORTHSTAR_LIVE_PAGE_PORT: ${NORTHSTAR_LIVE_PAGE_PORT:-8070}
+    ports:
+      - "127.0.0.1:${NORTHSTAR_LIVE_PAGE_PORT:-8070}:8070"
+    volumes:
+      - relay-key:/run/northstar-key:ro
+      - relay-state:/var/lib/northstar-live
+    user: "10001:10001"
+    read_only: true
+    tmpfs:
+      - /tmp:size=8m
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    mem_limit: 128m
+    pids_limit: 64
+    restart: unless-stopped
 
 volumes:
   db-data:
   odoo-data:
+  relay-key:
+  relay-state:
