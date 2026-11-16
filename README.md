@@ -15,7 +15,7 @@ Northstar Office & Industrial Supply Inc. is a fictional US company in Columbus,
 industrial supplies with about 25 employees. It comes as a ready-to-run Odoo 20 Community database with 12 months of history, every app
 connected to the others, and books that are right to the cent.
 
-**Data until 10 November 2026, refreshed every week.** (History from 10 November 2025. Odoo 20.0-20261102, Community edition.)
+**Data until 15 November 2026, refreshed every week.** (History from 15 November 2025. Odoo 20.0-20261112, Community edition.)
 
 The download is free, with no sign-in and no time limit. One zip holds a standard Odoo backup and a small Docker file that uses the
 official Odoo and PostgreSQL images. New days every night are optional, in the same download: see [New days every night](#new-days-every-night-optional).
@@ -24,8 +24,8 @@ official Odoo and PostgreSQL images. New days every night are optional, in the s
 
 1. **Download it** (Available now): Download northstar-odoo20.zip from the latest release, unzip it into an empty folder, run `docker compose up` and open Odoo on your own computer. Free, no sign-in.
 2. **Ask it with AI** (Available now): Sign in free at [speaktoyourdatabase.com](https://speaktoyourdatabase.com/northstar?utm_source=github&utm_medium=readme), get 20 free prompts and ask Northstar in ChatGPT, Claude or the Speak To Your Database chat. It is the sample every new account has.
-3. **Load it into your own Odoo** (Coming soon): Load Northstar into your own empty Odoo 20 with an administrator API key, then a new day every night.
-4. **Keep your download alive** (Coming soon): Your downloaded copy keeps living on your computer, a new day every night.
+3. **Load it into your own Odoo** (Available now): Load Northstar into your own empty Odoo 20 with an administrator API key, then a new day every night.
+4. **Keep your download alive** (Available now): Run `docker compose --profile live up -d` in the Northstar folder, open localhost:8070 and click Pair: a new day every night.
 
 **Running Northstar on a server? Our free guides:**
 
@@ -62,34 +62,34 @@ Apps: Sales, CRM, Purchase, Inventory, Invoicing, Point of Sale, Manufacturing, 
 
 | App | Records | Count |
 |---|---|---|
-| Sales | Quotations and sales orders | 2,194 |
-|  | Confirmed sales orders | 1,321 |
-|  | Sales order lines | 6,398 |
-| CRM | Leads and opportunities (won, lost and open) | 613 |
-|  | Won opportunities | 282 |
-|  | Lost (archived with a reason) | 302 |
-| Purchase | Purchase orders | 478 |
+| Sales | Quotations and sales orders | 2,170 |
+|  | Confirmed sales orders | 1,297 |
+|  | Sales order lines | 6,305 |
+| CRM | Leads and opportunities (won, lost and open) | 610 |
+|  | Won opportunities | 252 |
+|  | Lost (archived with a reason) | 325 |
+| Purchase | Purchase orders | 504 |
 | Inventory | Products (sold, bought, made) | 159 |
-|  | Transfers done (receipts, deliveries) | 2,223 |
-|  | Stock moves done | 10,742 |
-| Invoicing | Customer invoices | 1,835 |
-|  | Customer credit notes | 70 |
-|  | Vendor bills | 645 |
-|  | Payments | 2,346 |
-|  | Journal entries posted (all kinds) | 5,410 |
-| Point of Sale | Counter sessions | 251 |
-|  | Counter tickets (refunds included) | 3,529 |
-| Manufacturing | Manufacturing orders | 180 |
-|  | Work orders | 447 |
+|  | Transfers done (receipts, deliveries) | 2,210 |
+|  | Stock moves done | 10,628 |
+| Invoicing | Customer invoices | 1,815 |
+|  | Customer credit notes | 69 |
+|  | Vendor bills | 656 |
+|  | Payments | 2,331 |
+|  | Journal entries posted (all kinds) | 5,388 |
+| Point of Sale | Counter sessions | 249 |
+|  | Counter tickets (refunds included) | 3,495 |
+| Manufacturing | Manufacturing orders | 183 |
+|  | Work orders | 459 |
 |  | Bills of materials | 9 |
 | Employees | Employees (active) | 25 |
 |  | Departments | 8 |
 | Time Off | Time off requests | 115 |
 |  | Allocations | 88 |
-| Attendances | Attendance records | 1,379 |
-| Project | Projects | 44 |
-|  | Tasks | 452 |
-| Timesheets | Timesheet lines | 1,418 |
+| Attendances | Attendance records | 1,356 |
+| Project | Projects | 43 |
+|  | Tasks | 477 |
+| Timesheets | Timesheet lines | 1,417 |
 | Contacts | Customer companies | 150 |
 |  | Vendor companies | 37 |
 
@@ -125,12 +125,10 @@ Good to know:
 
 **New days every night (optional): `docker compose --profile live up -d`, then open <http://localhost:8070> and click Pair.**
 
-The data stops on 10 November 2026. Northstar Live keeps your copy alive: every night we add the day that just ended (quotes, orders,
-deliveries, invoices, payments, purchases, the trade counter, the workshop, projects, time off, leads), and the days since 10 November 2026
+The data stops on 15 November 2026. Northstar Live keeps your copy alive: every night we add the day that just ended (quotes, orders,
+deliveries, invoices, payments, purchases, the trade counter, the workshop, projects, time off, leads), and the days since 15 November 2026
 are caught up first. It is off until you switch it on, and it uses this same install: same data, nothing to download again but our
 small relay. It needs a free account at <https://speaktoyourdatabase.com/northstar?utm_source=github&utm_medium=readme>.
-
-**Opening soon.** Our Live service is not open yet. Until it is, the relay's page says it is not connected and nothing else changes.
 
 1. In the Northstar folder, run:
 
@@ -167,11 +165,11 @@ How it works, and what it can and cannot do:
 
 ## Restore it without Docker (Odoo database manager)
 
-The package holds the database as `northstar-odoo20-2026-11-10.zip`, a standard Odoo backup (`dump.sql`, `filestore`, `manifest.json`). It restores on any
+The package holds the database as `northstar-odoo20-2026-11-15.zip`, a standard Odoo backup (`dump.sql`, `filestore`, `manifest.json`). It restores on any
 self-hosted Odoo 20 Community:
 
 1. Open `/web/database/manager` on your Odoo 20 (for example <http://localhost:8069/web/database/manager>).
-2. Click **Restore Database**, enter your master password, choose `northstar-odoo20-2026-11-10.zip` (unzip the package first), name the database `northstar`.
+2. Click **Restore Database**, enter your master password, choose `northstar-odoo20-2026-11-15.zip` (unzip the package first), name the database `northstar`.
 3. Keep **This database is a copy** selected (it gives the restored database its own identity), then click **Continue**.
 4. Open the new database and log in with one of the logins below.
 
@@ -195,7 +193,7 @@ Northstar sends no email: the database has no mail server, and every address is 
 
 ## Fresh data
 
-**Data until 10 November 2026, refreshed every week.** We publish a new release every week; its 12 months of history end the day before it
+**Data until 15 November 2026, refreshed every week.** We publish a new release every week; its 12 months of history end the day before it
 was built. Your copy does not change by itself (unless you switch on the new days every night above): to move to a newer release, download the
 package again, run `docker compose down -v` in the old folder (`docker compose --profile live down -v` if Live is on), unzip the new package into a
 new empty folder and run `docker compose up` there.
@@ -224,8 +222,8 @@ this release.
 
 **How often is it refreshed?** It is refreshed every week. The data-until date is at the top of this page and in every release.
 
-**Which Odoo version do I need?** Odoo 20 Community, build 20.0-20261102 or later. The Docker file pins the images this release was
-tested with (`odoo:20.0-20261102`, `postgres:16`), and the optional relay by its digest.
+**Which Odoo version do I need?** Odoo 20 Community, build 20.0-20261112 or later. The Docker file pins the images this release was
+tested with (`odoo:20.0-20261112`, `postgres:16`), and the optional relay by its digest.
 
 **Does the download connect to your service?** No. Only if you switch on the new days every night with `docker compose --profile live up -d`:
 then the relay connects out to our service, and nothing else does.

@@ -30,7 +30,7 @@ services:
   # Runs once at each start: restores the database when it is not there yet, otherwise does nothing. Odoo's own technical lines go to a file in
   # this container (not to your window); a failure prints one plain line with the command that shows them.
   restore:
-    image: odoo:20.0-20261102
+    image: odoo:20.0-20261112
     depends_on:
       db:
         condition: service_healthy
@@ -51,11 +51,21 @@ services:
           echo "Northstar could not be restored: $$1 $$2 To see the details: docker compose cp restore:$$log northstar-restore.log"
           exit 1
         }
+        zip=$$(ls -1 /snapshot/northstar-odoo20-*.zip 2>/dev/null | sort | tail -n 1 || true)
         if psql -d postgres -tAc "SELECT 1 FROM pg_database WHERE datname = 'northstar'" 2>>"$$log" | grep -q 1; then
-          echo "Northstar database found: nothing to restore."
+          # Docker keeps the database of an earlier Northstar folder (same project name): say so when this folder carries another release.
+          # The release a database came from is its northstar.snapshot marker; the 5 Nov 2026 release, the only one built without it, has none.
+          carried=$$(basename "$${zip:-none}" .zip)
+          held=$$(psql -d northstar -tAc "SELECT value::json->>'id' FROM ir_config_parameter WHERE key = 'northstar.snapshot'" 2>>"$$log" || true)
+          held=$${held:-northstar-odoo20-2026-11-05}
+          if [ -z "$$zip" ] || [ "$$held" = "$$carried" ]; then
+            echo "Northstar database found: nothing to restore."
+          else
+            echo "Northstar database found, but from another download: it holds the data until $${held#northstar-odoo20-}, this folder carries the data until $${carried#northstar-odoo20-}."
+            echo "That database is kept as it is. To use the data in this folder instead (changes made in Northstar are lost): docker compose down -v, then docker compose up."
+          fi
           exit 0
         fi
-        zip=$$(ls -1 /snapshot/northstar-odoo20-*.zip 2>/dev/null | sort | tail -n 1 || true)
         if [ -z "$$zip" ]; then
           echo "Northstar could not be restored: no northstar-odoo20-*.zip next to docker-compose.yml. Unzip the whole Northstar package into an empty folder and run docker compose up there."
           exit 1
@@ -93,7 +103,7 @@ services:
     restart: "no"
 
   odoo:
-    image: odoo:20.0-20261102
+    image: odoo:20.0-20261112
     depends_on:
       restore:
         condition: service_completed_successfully
@@ -128,7 +138,7 @@ services:
   # for it to end well): makes (or checks) the Odoo API key the relay uses. The key is written to a volume only the relay mounts; it never leaves this
   # computer. Switched on later on an install that started without Live, it finds the database already there and only makes the key.
   live-init:
-    image: odoo:20.0-20261102
+    image: odoo:20.0-20261112
     profiles: [live]
     user: root
     depends_on:
@@ -151,9 +161,10 @@ services:
     restart: "no"
 
   # Northstar Live only: the relay. It connects out to our service, forwards only the daily-life calls it allows to the Odoo above and adds the key
-  # itself. Its page, with the pairing code and the Pair button: http://localhost:8070 (on this computer only).
+  # itself. Its page, with the pairing code and the Pair button: http://localhost:8070 (on this computer only). NORTHSTAR_LIVE_ODOO_PUBLIC_PORT is
+  # the port you open your Odoo on (NORTHSTAR_PORT above): the page links to it, for the texts only; the relay itself always reaches Odoo at odoo:8069.
   northstar-live:
-    image: ${NORTHSTAR_LIVE_IMAGE:-ghcr.io/speaktoyourdatabase/northstar-live:1.1.0@sha256:84804847fb52685b7278b4d8335cad7425960126af727ec7b1ec537e2ebd5c8d}
+    image: ${NORTHSTAR_LIVE_IMAGE:-ghcr.io/speaktoyourdatabase/northstar-live:1.2.0@sha256:c4660c99d607c25084e863a7699be9a6849977fcdaa67237c611d191fafa3503}
     profiles: [live]
     attach: false
     depends_on:
@@ -170,6 +181,7 @@ services:
       NORTHSTAR_LIVE_KEY_FILE: /run/northstar-key/odoo_key
       NORTHSTAR_LIVE_PAGE: 0.0.0.0:8070
       NORTHSTAR_LIVE_PAGE_PORT: ${NORTHSTAR_LIVE_PAGE_PORT:-8070}
+      NORTHSTAR_LIVE_ODOO_PUBLIC_PORT: ${NORTHSTAR_PORT:-8069}
     ports:
       - "127.0.0.1:${NORTHSTAR_LIVE_PAGE_PORT:-8070}:8070"
     volumes:

@@ -13,7 +13,7 @@ Northstar Office & Industrial Supply Inc. est une entreprise américaine fictive
 bureau, d'entretien et d'industrie légère, avec environ 25 salariés. Elle se présente comme une base Odoo 20 Community prête à l'emploi, avec
 12 mois d'historique, toutes les applications reliées entre elles et une comptabilité juste au centime.
 
-**Données jusqu'au 10 novembre 2026, actualisées chaque semaine.** (Historique depuis le 10 novembre 2025. Odoo 20.0-20261102, édition Community.)
+**Données jusqu'au 15 novembre 2026, actualisées chaque semaine.** (Historique depuis le 15 novembre 2025. Odoo 20.0-20261112, édition Community.)
 
 Le téléchargement est gratuit, sans inscription et sans limite de durée. Un seul zip contient une sauvegarde Odoo standard et un petit fichier
 Docker qui utilise les images officielles d'Odoo et de PostgreSQL. De nouvelles journées chaque nuit sont en option, dans le même
@@ -50,13 +50,10 @@ Bon à savoir :
 
 **De nouvelles journées chaque nuit (optionnel) : `docker compose --profile live up -d`, puis ouvrez <http://localhost:8070> et cliquez sur Associer.**
 
-Les données s'arrêtent au 10 novembre 2026. Northstar Live garde votre copie vivante : chaque nuit, nous ajoutons la journée qui vient de
+Les données s'arrêtent au 15 novembre 2026. Northstar Live garde votre copie vivante : chaque nuit, nous ajoutons la journée qui vient de
 se terminer (devis, commandes, livraisons, factures, paiements, achats, le comptoir, l'atelier, les projets, les congés, les pistes), et
-les journées depuis le 10 novembre 2026 sont rattrapées d'abord. C'est désactivé tant que vous ne l'activez pas, et cela utilise la même
+les journées depuis le 15 novembre 2026 sont rattrapées d'abord. C'est désactivé tant que vous ne l'activez pas, et cela utilise la même
 installation : les mêmes données, rien à retélécharger sauf notre petit relais. Il faut un compte gratuit sur <https://speaktoyourdatabase.com/northstar?utm_source=github&utm_medium=readme>.
-
-**Bientôt disponible.** Notre service Live n'est pas encore ouvert. D'ici là, la page du relais indique qu'il n'est pas connecté, et rien
-d'autre ne change.
 
 1. Dans le dossier de Northstar, lancez :
 
