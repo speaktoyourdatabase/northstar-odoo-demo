@@ -2,9 +2,9 @@
   "name": "Northstar Office & Industrial Supply Inc. (fictional), Odoo 20 Community demo database",
   "publisher": "Speak To Your Database",
   "url": "https://speaktoyourdatabase.com/northstar",
-  "build_date": "2026-11-16",
-  "data_from": "2025-11-15",
-  "data_until": "2026-11-15",
+  "build_date": "2026-11-23",
+  "data_from": "2025-11-22",
+  "data_until": "2026-11-22",
   "refresh": "weekly",
   "package": {
     "file": "northstar-odoo20.zip",
@@ -42,37 +42,37 @@
     {
       "app": "Sales",
       "label": "Quotations and sales orders",
-      "count": 2170
+      "count": 2169
     },
     {
       "app": "Sales",
       "label": "Confirmed sales orders",
-      "count": 1297
+      "count": 1296
     },
     {
       "app": "Sales",
       "label": "Sales order lines",
-      "count": 6305
+      "count": 6323
     },
     {
       "app": "CRM",
       "label": "Leads and opportunities (won, lost and open)",
-      "count": 610
+      "count": 616
     },
     {
       "app": "CRM",
       "label": "Won opportunities",
-      "count": 252
+      "count": 258
     },
     {
       "app": "CRM",
       "label": "Lost (archived with a reason)",
-      "count": 325
+      "count": 319
     },
     {
       "app": "Purchase",
       "label": "Purchase orders",
-      "count": 504
+      "count": 473
     },
     {
       "app": "Inventory",
@@ -82,37 +82,37 @@
     {
       "app": "Inventory",
       "label": "Transfers done (receipts, deliveries)",
-      "count": 2210
+      "count": 2191
     },
     {
       "app": "Inventory",
       "label": "Stock moves done",
-      "count": 10628
+      "count": 10696
     },
     {
       "app": "Invoicing",
       "label": "Customer invoices",
-      "count": 1815
+      "count": 1821
     },
     {
       "app": "Invoicing",
       "label": "Customer credit notes",
-      "count": 69
+      "count": 67
     },
     {
       "app": "Invoicing",
       "label": "Vendor bills",
-      "count": 656
+      "count": 638
     },
     {
       "app": "Invoicing",
       "label": "Payments",
-      "count": 2331
+      "count": 2309
     },
     {
       "app": "Invoicing",
       "label": "Journal entries posted (all kinds)",
-      "count": 5388
+      "count": 5350
     },
     {
       "app": "Point of Sale",
@@ -122,17 +122,17 @@
     {
       "app": "Point of Sale",
       "label": "Counter tickets (refunds included)",
-      "count": 3495
+      "count": 3496
     },
     {
       "app": "Manufacturing",
       "label": "Manufacturing orders",
-      "count": 183
+      "count": 171
     },
     {
       "app": "Manufacturing",
       "label": "Work orders",
-      "count": 459
+      "count": 435
     },
     {
       "app": "Manufacturing",
@@ -152,7 +152,7 @@
     {
       "app": "Time Off",
       "label": "Time off requests",
-      "count": 115
+      "count": 113
     },
     {
       "app": "Time Off",
@@ -162,22 +162,22 @@
     {
       "app": "Attendances",
       "label": "Attendance records",
-      "count": 1356
+      "count": 1360
     },
     {
       "app": "Project",
       "label": "Projects",
-      "count": 43
+      "count": 47
     },
     {
       "app": "Project",
       "label": "Tasks",
-      "count": 477
+      "count": 463
     },
     {
       "app": "Timesheets",
       "label": "Timesheet lines",
-      "count": 1417
+      "count": 1399
     },
     {
       "app": "Contacts",
@@ -218,11 +218,11 @@
     }
   ],
   "backup": {
-    "file": "northstar-odoo20-2026-11-15.zip",
-    "bytes": 8650746,
-    "sha256": "2277a812f9253d5b08579b2e946e1d32303f40bde609139dd1c9f91459151246",
+    "file": "northstar-odoo20-2026-11-22.zip",
+    "bytes": 8695766,
+    "sha256": "0c3a52f3c242bb179c5412e18e91ec583b629301e42d4bcc59a0ed8ceee9d04e",
     "format": "Odoo backup zip (dump.sql, filestore, manifest.json)",
-    "dump_sql_bytes": 66532991
+    "dump_sql_bytes": 66326740
   },
   "create_date": "set to each record's business date for the models listed in create_date_models (the rest keep their load time)",
   "create_date_models": [

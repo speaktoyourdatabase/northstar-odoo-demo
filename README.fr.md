@@ -4,8 +4,17 @@ Le bouton vert Code > Download ZIP ne contient pas la base de données.
 
 ## Démarrage rapide
 
-1. Installez [Docker Desktop](https://www.docker.com/products/docker-desktop/) et lancez-le.
-2. Décompressez le téléchargement dans un dossier vide, ouvrez un terminal dans ce dossier et lancez `docker compose up`. Quand il affiche `Northstar is ready`, ouvrez <http://localhost:8069> et connectez-vous avec `admin` / `admin`.
+1. Installez [Docker Desktop](https://www.docker.com/products/docker-desktop/) et lancez-le. Sous Windows, il a besoin de WSL 2 : s'il
+   propose d'installer ou de mettre à jour WSL, acceptez et redémarrez l'ordinateur. Attendez qu'il indique que le moteur tourne.
+2. Décompressez le téléchargement dans un dossier vide et ouvrez un terminal dans le dossier qui contient `docker-compose.yml`
+   (« Extraire tout » sous Windows crée un dossier dans le dossier choisi : ouvrez celui-là) :
+   - **Windows :** clic droit dans un espace vide > **Ouvrir dans le Terminal** (Windows 11), ou cliquez dans la barre d'adresse, tapez `powershell`, Entrée.
+   - **macOS :** dans le Finder, clic droit sur le dossier > **Nouveau terminal au dossier**.
+   - **Linux :** clic droit dans le dossier > **Ouvrir dans un terminal**, ou `cd` dans le dossier.
+
+   Lancez `docker compose up` (le premier démarrage télécharge environ 1 Go une seule fois, quelques minutes avec une connexion normale).
+   Quand il affiche `Northstar is ready`, ouvrez <http://localhost:8069> et connectez-vous avec `admin` / `admin`. Si le terminal ne trouve
+   pas de `docker-compose.yml`, vous n'êtes pas dans le bon dossier.
 
 # Northstar : une entreprise fictive pour Odoo 20 Community
 
@@ -13,7 +22,7 @@ Northstar Office & Industrial Supply Inc. est une entreprise américaine fictive
 bureau, d'entretien et d'industrie légère, avec environ 25 salariés. Elle se présente comme une base Odoo 20 Community prête à l'emploi, avec
 12 mois d'historique, toutes les applications reliées entre elles et une comptabilité juste au centime.
 
-**Données jusqu'au 15 novembre 2026, actualisées chaque semaine.** (Historique depuis le 15 novembre 2025. Odoo 20.0-20261112, édition Community.)
+**Données jusqu'au 22 novembre 2026, actualisées chaque semaine.** (Historique depuis le 22 novembre 2025. Odoo 20.0-20261112, édition Community.)
 
 Le téléchargement est gratuit, sans inscription et sans limite de durée. Un seul zip contient une sauvegarde Odoo standard et un petit fichier
 Docker qui utilise les images officielles d'Odoo et de PostgreSQL. De nouvelles journées chaque nuit sont en option, dans le même
@@ -25,15 +34,23 @@ Applications : Sales, CRM, Purchase, Inventory, Invoicing, Point of Sale, Manufa
 ## Lancer Northstar avec Docker (Windows, macOS, Linux)
 
 1. Installez Docker Desktop (Windows, macOS) ou Docker Engine avec le plugin Compose (Linux). Il faut Docker Compose 2.20 ou plus récent ;
-   toutes les versions actuelles de Docker Desktop l'ont.
+   toutes les versions actuelles de Docker Desktop l'ont. Sous Windows, Docker Desktop a besoin de WSL 2 : s'il propose d'installer ou de
+   mettre à jour WSL, acceptez et redémarrez l'ordinateur. Lancez Docker Desktop et attendez qu'il indique que le moteur tourne, puis continuez.
 2. [Téléchargez Northstar](https://github.com/speaktoyourdatabase/northstar-odoo-demo/releases/latest/download/northstar-odoo20.zip) (`northstar-odoo20.zip`, environ 8.7 MB) et décompressez-le dans un dossier vide.
-3. Ouvrez un terminal dans ce dossier et lancez :
+3. Ouvrez un terminal dans le dossier qui contient `docker-compose.yml` :
+   - **Windows :** dans l'Explorateur de fichiers, ouvrez le dossier décompressé. « Extraire tout » crée un dossier dans le dossier choisi :
+     ouvrez celui qui contient `docker-compose.yml`. Faites un clic droit dans un espace vide et choisissez **Ouvrir dans le Terminal**
+     (Windows 11), ou cliquez dans la barre d'adresse, tapez `powershell` et appuyez sur Entrée.
+   - **macOS :** dans le Finder, clic droit sur le dossier puis **Nouveau terminal au dossier** (ou Services > Nouveau terminal au dossier).
+   - **Linux :** clic droit dans le dossier puis **Ouvrir dans un terminal**, ou `cd` dans le dossier.
+
+   Si le terminal dit qu'il ne trouve pas de `docker-compose.yml`, vous n'êtes pas dans le bon dossier. Lancez ensuite :
 
    ```
    docker compose up
    ```
 
-4. Le premier démarrage prend quelques minutes, c'est normal : Docker télécharge une fois les deux images officielles, puis Northstar
+4. Le premier démarrage prend quelques minutes, c'est normal : Docker télécharge une fois les deux images officielles (environ 1 Go en tout, quelques minutes avec une connexion normale), puis Northstar
    affiche `Restoring Northstar` et une ligne `Still restoring` toutes les 10 secondes (60 à 120 secondes en tout, en général).
 5. Quand vous voyez `Northstar is ready`, ouvrez <http://localhost:8069> et connectez-vous avec admin / admin (les quatre commerciaux ont
    le mot de passe `northstar`). La fenêtre reste ouverte tant que Northstar tourne.
@@ -50,9 +67,9 @@ Bon à savoir :
 
 **De nouvelles journées chaque nuit (optionnel) : `docker compose --profile live up -d`, puis ouvrez <http://localhost:8070> et cliquez sur Associer.**
 
-Les données s'arrêtent au 15 novembre 2026. Northstar Live garde votre copie vivante : chaque nuit, nous ajoutons la journée qui vient de
+Les données s'arrêtent au 22 novembre 2026. Northstar Live garde votre copie vivante : chaque nuit, nous ajoutons la journée qui vient de
 se terminer (devis, commandes, livraisons, factures, paiements, achats, le comptoir, l'atelier, les projets, les congés, les pistes), et
-les journées depuis le 15 novembre 2026 sont rattrapées d'abord. C'est désactivé tant que vous ne l'activez pas, et cela utilise la même
+les journées depuis le 22 novembre 2026 sont rattrapées d'abord. C'est désactivé tant que vous ne l'activez pas, et cela utilise la même
 installation : les mêmes données, rien à retélécharger sauf notre petit relais. Il faut un compte gratuit sur <https://speaktoyourdatabase.com/northstar?utm_source=github&utm_medium=readme>.
 
 1. Dans le dossier de Northstar, lancez :
@@ -97,6 +114,8 @@ modifiez-le et partagez-le pour tout usage, privé ou commercial, sans autorisat
 ```
 Demo data: Northstar by Speak To Your Database, speaktoyourdatabase.com/northstar
 ```
+
+Posez vos questions sur Northstar depuis ChatGPT ou Claude : https://speaktoyourdatabase.com/northstar
 
 Ces mots de passe de démonstration sont publics : gardez Odoo sur votre ordinateur, comme le fait ce paquet. Plus d'informations : <https://speaktoyourdatabase.com/northstar?utm_source=github&utm_medium=readme>
 
